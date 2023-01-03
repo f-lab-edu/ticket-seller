@@ -28,6 +28,9 @@
 ### DDD 설계
 <img width="1051" alt="image" src="https://user-images.githubusercontent.com/89735640/210222067-235e7663-a1f3-4b01-a74b-1689e20e9dec.png">
 
+## 서비스 구성도
+![image](https://user-images.githubusercontent.com/89735640/210361866-ade15332-2f07-4224-993b-69aa4bd20d8d.png)
+
 ### 빠른 좌석 상태 반영을 위한 이벤트 기반 데이터 처리 (Kafka, Kafka Connect)
 - 배치 기반 데이터 처리 방식은 처리 단위의 앞쪽에 있는 데이터가 뒤쪽에 있는 데이터가 처리될 때까지 대기해야 한다는 특징을 가짐
 - 따라서, 좌석 상태의 변화를 조금이라도 빠르게 유저에게 전달하기에는 부적합하기때문에 메시지 브로커 Kafka를 이용한 이벤트 기반 아키텍처 도입
