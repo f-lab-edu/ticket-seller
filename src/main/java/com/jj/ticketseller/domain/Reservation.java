@@ -13,7 +13,6 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Reservation {
 
     @Id @GeneratedValue
-    @Column(name = "reservation_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
