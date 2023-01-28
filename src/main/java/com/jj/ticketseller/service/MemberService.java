@@ -1,7 +1,8 @@
 package com.jj.ticketseller.service;
 
 import com.jj.ticketseller.domain.Member;
-import com.jj.ticketseller.repository.MemberRepository;
+import com.jj.ticketseller.repository.MemberRepositoryImpl;
+import com.jj.ticketseller.repository.MemberCustomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,10 +11,12 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-@RequiredArgsConstructor
 public class MemberService {
-    private final MemberRepository memberRepository;
+    private final MemberRepositoryImpl memberRepository;
 
+    public MemberService(MemberRepositoryImpl memberRepository) {
+        this.memberRepository = memberRepository;
+    }
     @Transactional
     public Long join(Member member) {
         validateDuplicateMember(member);

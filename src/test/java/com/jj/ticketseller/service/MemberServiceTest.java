@@ -2,6 +2,7 @@ package com.jj.ticketseller.service;
 
 import com.jj.ticketseller.domain.Member;
 import com.jj.ticketseller.repository.MemberRepository;
+import com.jj.ticketseller.repository.MemberCustomRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 public class MemberServiceTest {
     @Autowired MemberService memberService;
-    @Autowired
-    MemberRepository memberRepository;
 
     @Test
     public void signup() throws Exception {
@@ -25,7 +24,7 @@ public class MemberServiceTest {
 
         Long savedId = memberService.join(member);
 
-        assertEquals(member, memberRepository.findOne(savedId));
+        assertEquals(member, memberService.findOne(savedId));
     }
 
     @Test(expected = IllegalStateException.class)
