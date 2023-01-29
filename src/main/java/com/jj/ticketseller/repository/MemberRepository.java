@@ -1,5 +1,8 @@
 package com.jj.ticketseller.repository;
 
+import com.jj.ticketseller.domain.Member;
+import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +15,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
+@RequiredArgsConstructor
 public class MemberRepository implements JpaRepository {
+    private final EntityManager em;
     @Override
     public void flush() {
 
@@ -78,6 +83,10 @@ public class MemberRepository implements JpaRepository {
         return null;
     }
 
+    public void save(Member member) {
+        em.persist(member);
+    }
+
     @Override
     public Optional findById(Object o) {
         return Optional.empty();
@@ -86,11 +95,6 @@ public class MemberRepository implements JpaRepository {
     @Override
     public boolean existsById(Object o) {
         return false;
-    }
-
-    @Override
-    public List findAll() {
-        return null;
     }
 
     @Override
@@ -143,9 +147,23 @@ public class MemberRepository implements JpaRepository {
         return Optional.empty();
     }
 
+    public Member findOne(Long id) {
+        return em.find(Member.class, id);
+    }
+
     @Override
     public Page findAll(Example example, Pageable pageable) {
         return null;
+    }
+
+    public List<Member> findAll() {
+        return em.createQuery("select m from Member m", Member.class).getResultList();
+    }
+
+    List<Member> findByName(String name) {
+        return em.createQuery("select m from Member m where m.name = :name", Member.class)
+                .setParameter("name", name)
+                .getResultList();
     }
 
     @Override
