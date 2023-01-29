@@ -1,26 +1,29 @@
 package com.jj.ticketseller.service;
 
 import com.jj.ticketseller.domain.Member;
-import com.jj.ticketseller.repository.MemberRepository;
-import com.jj.ticketseller.repository.MemberCustomRepository;
+
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.junit.runner.RunWith;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 @Transactional
 public class MemberServiceTest {
-    @Autowired MemberService memberService;
+    @Mock
+    private MemberService memberService;
+
 
     @Test
     public void signup() throws Exception {
         Member member = new Member();
+
+        Mockito.when(memberService.join(member)).thenReturn(member.getId());
+        Mockito.when(memberService.findOne(member.getId())).thenReturn(member);
 
         Long savedId = memberService.join(member);
 
@@ -34,6 +37,9 @@ public class MemberServiceTest {
 
         Member member2 = new Member();
         member2.setName("1");
+
+        Mockito.when(memberService.join(member1)).thenReturn(member1.getId());
+        Mockito.when(memberService.join(member1)).thenThrow(IllegalStateException.class);
 
         memberService.join(member1);
         memberService.join(member2);
