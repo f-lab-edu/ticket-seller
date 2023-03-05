@@ -26,10 +26,12 @@
 
 ## 계획
 ### DDD 설계
-<img width="1051" alt="image" src="https://user-images.githubusercontent.com/89735640/210222067-235e7663-a1f3-4b01-a74b-1689e20e9dec.png">
+![image](https://user-images.githubusercontent.com/89735640/222959347-89f660fb-f7c8-48fa-99f9-8d93b13330f3.png)
+
 
 ## 서비스 구성도
-![image](https://user-images.githubusercontent.com/89735640/210361866-ade15332-2f07-4224-993b-69aa4bd20d8d.png)
+![image](https://user-images.githubusercontent.com/89735640/222959338-5d5e103d-a9c6-4b7b-b250-3da362972365.png)
+
 
 ### 빠른 좌석 상태 반영을 위한 이벤트 기반 데이터 처리 (Kafka, Kafka Connect)
 - 배치 기반 데이터 처리 방식은 처리 단위의 앞쪽에 있는 데이터가 뒤쪽에 있는 데이터가 처리될 때까지 대기해야 한다는 특징을 가짐
@@ -38,13 +40,3 @@
 
 <img width="419" alt="image" src="https://user-images.githubusercontent.com/89735640/210221613-abfea9a2-3cae-4706-a046-e7759de1c0f4.png">
 
-## 마일스톤
-- ~ 1/10 : 설계 보충 및 회원 가입 비즈니스 로직 구현
-- ~ 1/13 : 공연 예약 비즈니스 로직 구현
-- ~ 1/10 : 결제 비즈니스 로직 구현
-- ~ 1/13 : 결제 시스템 연동(토스페이먼츠 API)
-- ~ 1/17 : 대기 비즈니스 로직 구현
-- ~ 1/20 : Kafka 이용한 CDC 플랫폼 구현
-- ~ 2/10 : 성능 부하 테스트 시스템 구축 & 테스트
-- ~ 2/20 : Web UI 구현
-- (옵션) CI/CD - k8s 
