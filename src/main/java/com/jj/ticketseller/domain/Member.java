@@ -10,6 +10,9 @@ import java.util.List;
 @Entity
 @Getter @Setter
 public class Member {
+    public Member(String name) {
+        this.name = name;
+    }
     @Id @GeneratedValue()
     private Long id;
 
@@ -18,4 +21,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Reservation> reservations = new ArrayList<>();
+
+
+
 }

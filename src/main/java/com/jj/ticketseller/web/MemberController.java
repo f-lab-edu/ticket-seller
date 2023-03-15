@@ -1,6 +1,7 @@
 package com.jj.ticketseller.web;
 
 import com.jj.ticketseller.domain.Member;
+import com.jj.ticketseller.dto.MemberDTO;
 import com.jj.ticketseller.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,20 +19,16 @@ public class MemberController {
     private final MemberService memberService;
     @GetMapping(value = "/members/new")
     public String createForm(Model model) {
-        model.addAttribute("memberForm", new MemberForm());
+        model.addAttribute("memberForm", new MemberDTO());
         return "members/createMemberForm";
     }
     @PostMapping(value = "/members/new")
-    public String create(@Valid MemberForm form, BindingResult result) {
+    public String create(@Valid MemberDTO memberDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "members/createMemberForm";
         }
-        Address address = new Address(form.getCity(), form.getStreet(),
-                form.getZipcode());
-        Member member = new Member();
-        member.setName(form.getName());
-        member.setAddress(address);
-        memberService.join(member);
+
+        memberService.join(memberDTO);
         return "redirect:/";
     }
 
