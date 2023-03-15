@@ -20,8 +20,8 @@ import java.util.function.Function;
 public class ShowRepository implements JpaRepository {
     private final EntityManager em;
 
-    public Show findOne(Long id) {
-        return em.find(Show.class, id);
+    public Optional<Show> findOne(Long id) {
+        return Optional.ofNullable(em.find(Show.class, id));
     }
 
     public List<Show> findByName(String name) {
