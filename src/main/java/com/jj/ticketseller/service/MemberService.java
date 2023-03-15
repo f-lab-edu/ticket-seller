@@ -1,6 +1,8 @@
 package com.jj.ticketseller.service;
 
 import com.jj.ticketseller.domain.Member;
+import com.jj.ticketseller.domain.MemberFactory;
+import com.jj.ticketseller.dto.MemberDTO;
 import com.jj.ticketseller.repository.MemberRepositoryImpl;
 import com.jj.ticketseller.repository.MemberCustomRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,10 @@ public class MemberService {
     private final MemberRepositoryImpl memberRepository;
 
     @Transactional
-    public Long join(Member member) {
+    public Long join(MemberDTO memberDTO) {
+        Member member = MemberFactory.createMember(memberDTO.getName(),
+                memberDTO.getCity(), memberDTO.getStreet(), memberDTO.getZipcode());
+
         validateDuplicateMember(member);
         memberRepository.save(member);
 

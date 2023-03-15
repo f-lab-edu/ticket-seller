@@ -2,47 +2,49 @@ package com.jj.ticketseller.service;
 
 import com.jj.ticketseller.domain.Member;
 
+import com.jj.ticketseller.domain.MemberFactory;
+import com.jj.ticketseller.dto.MemberDTO;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.junit.runner.RunWith;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
-@Transactional
 public class MemberServiceTest {
+    private final String name = "JJ";
+    private final String city = "city";
+    private final String street = "street";
+    private final String zipcode = "zipcode";
     @Mock
     private MemberService memberService;
 
-
     @Test
-    public void signup() throws Exception {
-        Member member = new Member();
+    public void signup() throws IllegalStateException {
+        MemberDTO memberDTO = new MemberDTO(name, city, street, zipcode);
+        Member member = MemberFactory.createMember(name, city, street, zipcode);
 
-        Mockito.when(memberService.join(member)).thenReturn(member.getId());
+        Mockito.when(memberService.join(memberDTO))
+                .thenReturn(member.getId());
         Mockito.when(memberService.findOne(member.getId())).thenReturn(member);
 
-        Long savedId = memberService.join(member);
+        Long savedId = memberService.join(memberDTO);
 
         assertEquals(member, memberService.findOne(savedId));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void duplicateMemberException() throws Exception {
-        Member member1 = new Member();
-        member1.setName("1");
+    public void duplicateMemberException() throws IllegalStateException {
+        MemberDTO memberDTO = new MemberDTO(name, city, street, zipcode);
+        Member member = MemberFactory.createMember(name, city, street, zipcode);
 
-        Member member2 = new Member();
-        member2.setName("1");
+        Mockito.when(memberService.join(memberDTO)).thenReturn(member.getId());
+        Mockito.when(memberService.join(memberDTO)).thenThrow(IllegalStateException.class);
 
-        Mockito.when(memberService.join(member1)).thenReturn(member1.getId());
-        Mockito.when(memberService.join(member1)).thenThrow(IllegalStateException.class);
-
-        memberService.join(member1);
-        memberService.join(member2);
+        memberService.join(memberDTO);
+        memberService.join(memberDTO);
 
         fail("예외 발생");
     }
