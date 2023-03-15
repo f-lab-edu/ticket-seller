@@ -22,6 +22,6 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Reservation> reservations = new ArrayList<>();
 
-
-
+    @Embedded
+    private Address address;
 }
