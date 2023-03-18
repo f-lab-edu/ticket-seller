@@ -3,6 +3,7 @@ package com.jj.ticketseller.service;
 import com.jj.ticketseller.domain.Member;
 import com.jj.ticketseller.domain.MemberFactory;
 import com.jj.ticketseller.dto.MemberDTO;
+import com.jj.ticketseller.repository.MemberCustomRepository;
 import com.jj.ticketseller.repository.MemberRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
-    private final MemberRepositoryImpl memberRepository;
+    private final MemberCustomRepository memberRepository;
 
     @Transactional
     public Long join(MemberDTO memberDTO) {
