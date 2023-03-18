@@ -1,8 +1,7 @@
 package com.jj.ticketseller.service;
 
 import com.jj.ticketseller.domain.Show;
-import com.jj.ticketseller.repository.ShowCustomRepository;
-import com.jj.ticketseller.repository.ShowRepositoryImpl;
+import com.jj.ticketseller.repository.ShowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ShowService {
-    private final ShowCustomRepository showRepository;
+    private final ShowRepository showRepository;
 
     public List<Show> findShows() {
         return showRepository.findAll();
