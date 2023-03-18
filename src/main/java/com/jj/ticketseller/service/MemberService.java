@@ -4,9 +4,7 @@ import com.jj.ticketseller.domain.Member;
 import com.jj.ticketseller.domain.MemberFactory;
 import com.jj.ticketseller.dto.MemberDTO;
 import com.jj.ticketseller.repository.MemberRepositoryImpl;
-import com.jj.ticketseller.repository.MemberCustomRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +18,7 @@ public class MemberService {
 
     @Transactional
     public Long join(MemberDTO memberDTO) {
-        Member member = MemberFactory.createMember(memberDTO.getName(),
-                memberDTO.getCity(), memberDTO.getStreet(), memberDTO.getZipcode());
+        Member member = MemberFactory.createMember(memberDTO);
 
         validateDuplicateMember(member);
         memberRepository.save(member);

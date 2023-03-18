@@ -24,7 +24,7 @@ public class MemberServiceTest {
     @Test
     public void join() throws IllegalStateException {
         MemberDTO memberDTO = new MemberDTO(name, city, street, zipcode);
-        Member member = MemberFactory.createMember(name, city, street, zipcode);
+        Member member = MemberFactory.createMember(memberDTO);
 
         Mockito.when(memberService.join(memberDTO))
                 .thenReturn(member.getId());
@@ -38,7 +38,7 @@ public class MemberServiceTest {
     @Test(expected = IllegalStateException.class)
     public void duplicateMemberException() throws IllegalStateException {
         MemberDTO memberDTO = new MemberDTO(name, city, street, zipcode);
-        Member member = MemberFactory.createMember(name, city, street, zipcode);
+        Member member = MemberFactory.createMember(memberDTO);
 
         Mockito.when(memberService.join(memberDTO)).thenReturn(member.getId());
         Mockito.when(memberService.join(memberDTO)).thenThrow(IllegalStateException.class);
