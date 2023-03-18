@@ -22,7 +22,7 @@ public class MemberServiceTest {
     private MemberService memberService;
 
     @Test
-    public void signup() throws IllegalStateException {
+    public void join() throws IllegalStateException {
         MemberDTO memberDTO = new MemberDTO(name, city, street, zipcode);
         Member member = MemberFactory.createMember(name, city, street, zipcode);
 
