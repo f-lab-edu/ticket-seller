@@ -18,6 +18,17 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class MemberRepository implements JpaRepository {
     private final EntityManager em;
+
+    public List<Member> findAll() {
+        return em.createQuery("select m from Member m", Member.class).getResultList();
+    }
+
+    List<Member> findByName(String name) {
+        return em.createQuery("select m from Member m where m.name = :name", Member.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
+
     @Override
     public void flush() {
 
@@ -154,16 +165,6 @@ public class MemberRepository implements JpaRepository {
     @Override
     public Page findAll(Example example, Pageable pageable) {
         return null;
-    }
-
-    public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class).getResultList();
-    }
-
-    List<Member> findByName(String name) {
-        return em.createQuery("select m from Member m where m.name = :name", Member.class)
-                .setParameter("name", name)
-                .getResultList();
     }
 
     @Override
