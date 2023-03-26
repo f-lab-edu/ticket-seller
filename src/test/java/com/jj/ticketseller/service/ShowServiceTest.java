@@ -1,33 +1,38 @@
 package com.jj.ticketseller.service;
 
 import com.jj.ticketseller.domain.Show;
+import com.jj.ticketseller.repository.ShowRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShowServiceTest {
-    @Mock
+    @InjectMocks
     private ShowService showService;
+    @Mock
+    private ShowRepository showRepository;
 
     @Test
     public void findShows() {
         // given
         Show show = new Show();
         show.setName("Test");
-        when(showService.findShows()).thenReturn(Collections.singletonList(show));
+        when(showRepository.findAll()).thenReturn(Collections.singletonList(show));
         // when
         List<Show> result = showService.findShows();
         // then
         assertEquals(Collections.singletonList(show), result);
-        verify(showService).findShows();
+        verify(showRepository).findAll();
     }
 
     @Test
@@ -36,12 +41,12 @@ public class ShowServiceTest {
         String name = "Test";
         Show show = new Show();
         show.setName(name);
-        when(showService.findByName(name)).thenReturn(Collections.singletonList(show));
+        when(showRepository.findByName(name)).thenReturn(Collections.singletonList(show));
         // when
         List<Show> result = showService.findByName(name);
         // then
         assertEquals(Collections.singletonList(show), result);
-        verify(showService).findByName(name);
+        verify(showRepository).findByName(name);
     }
 
     @Test
@@ -51,23 +56,23 @@ public class ShowServiceTest {
         Show show = new Show();
         show.setId(id);
         show.setPrice(1000);
-        when(showService.getPrice(id)).thenReturn(show.getPrice());
+        when(showRepository.findOne(id)).thenReturn(Optional.of(show));
         // when
         int price = showService.getPrice(id);
         // then
         assertEquals(1000, price);
-        verify(showService).getPrice(id);
+        verify(showRepository).findOne(id);
     }
 
     @Test
     public void getPriceFail() {
         // given
         long id = 1L;
-        when(showService.getPrice(id)).thenReturn(0);
+        when(showRepository.findOne(id)).thenReturn(Optional.empty());
         // when
         int price = showService.getPrice(id);
         // then
         assertEquals(0, price);
-        verify(showService).getPrice(id);
+        verify(showRepository).findOne(id);
     }
 }
